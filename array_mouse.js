@@ -1,4 +1,3 @@
-// github edit test
 var w = 25;		// width of square in grid, in pixels
 var h = 15;		// height of square in grid, in pixels
 var canvasPosX = 30;	// x pos of canvas top left corner
