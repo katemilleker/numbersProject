@@ -19,7 +19,7 @@ function touchStarted() { isTouching = true; }
 function touchEnded() { isTouching = false; }
 
 // disable touch page scrolling, cut copy paste, and right mouse click for mobile
-//document.addEventListener("scrollstart", function(e) { e.preventDefault(); }, false);
+document.addEventListener("scrollstart", function(e) { e.preventDefault(); }, false);
 //document.addEventListener("touchmove", function(e){ e.preventDefault(); }, false);
 document.addEventListener("oncut", function(e) { e.preventDefault(); }, false);
 document.addEventListener("oncopy", function(e) { e.preventDefault(); }, false);
