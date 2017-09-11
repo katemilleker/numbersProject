@@ -22,7 +22,6 @@ function touchEnded() { isTouching = false; }
 //document.addEventListener("scrollstart", function(e) { e.preventDefault(); }, false);
 //document.addEventListener("touchmove", function(e){ e.preventDefault(); }, false);
 window.addEventListener("scroll", function(e) {
-    window.scrollTo(0, 0);
     e.preventDefault();
     e.stopPropagation();
 }, false);
