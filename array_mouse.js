@@ -21,6 +21,11 @@ function touchEnded() { isTouching = false; }
 // disable touch page scrolling, cut copy paste, and right mouse click for mobile
 //document.addEventListener("scrollstart", function(e) { e.preventDefault(); }, false);
 //document.addEventListener("touchmove", function(e){ e.preventDefault(); }, false);
+window.addEventListener("scroll", function(e) {
+    window.scrollTo(0, 0);
+    e.preventDefault();
+    e.stopPropagation();
+}, false);
 document.addEventListener("oncut", function(e) { e.preventDefault(); }, false);
 document.addEventListener("oncopy", function(e) { e.preventDefault(); }, false);
 document.addEventListener("onpaste", function(e) { e.preventDefault(); }, false);
