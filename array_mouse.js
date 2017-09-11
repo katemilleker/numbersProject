@@ -25,6 +25,8 @@ document.addEventListener("oncopy", function(e) { e.preventDefault(); }, false);
 document.addEventListener("onpaste", function(e) { e.preventDefault(); }, false);
 document.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
 
+document.body.addEventListener("touchmove", function(e){ e.preventDefault(); });
+
 
 function setup() {
 	// p5.dom.js library required locally for dom function .position()
