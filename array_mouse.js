@@ -12,11 +12,19 @@ var min_opac_num = 0;
 var max_opac_num = 200;
 var decCoords = [];		// array of activated elements to decrememnt
 
-// event-triggered functions
+// event-triggered functions flag the current state
 function inCanvas() {	insideCanvas = true; }
 function outCanvas() { insideCanvas = false; }
 function touchStarted() { isTouching = true; }
 function touchEnded() { isTouching = false; }
+
+// disable touch page scrolling, cut copy paste, and right mouse click for mobile
+document.addEventListener("scrollstart", function(e) { e.preventDefault(); }, false);
+document.addEventListener("oncut", function(e) { e.preventDefault(); }, false);
+document.addEventListener("oncopy", function(e) { e.preventDefault(); }, false);
+document.addEventListener("onpaste", function(e) { e.preventDefault(); }, false);
+document.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
+
 
 function setup() {
 	// p5.dom.js library required locally for dom function .position()
