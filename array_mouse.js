@@ -200,7 +200,7 @@ function decrease() {
 
 // math for increasing numbers
 function increaseCurr(curr) {
-	return curr + Math.floor(Math.random()*9) + 1;
+	return curr + Math.floor(Math.random() * 9) + 1;
 }
 
 // math for decreasing numbers
