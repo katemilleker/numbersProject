@@ -10,7 +10,7 @@ var prevRow = 0;
 var insideCanvas = false;		// bool mouse over/out for canvas
 var isTouching = true;	
 var min_opac_num = 0;
-var max_opac_num = 200;
+var max_opac_num = 500;
 var decCoords = [];		// array of activated elements to decrememnt
 
 // event-triggered functions flag the current state
@@ -200,12 +200,12 @@ function decrease() {
 
 // math for increasing numbers
 function increaseCurr(curr) {
-	return curr + 1;
+	return curr + Math.floor(Math.random()*9) + 1;
 }
 
 // math for decreasing numbers
 function decreaseCurr(curr) {
-	return curr - 0.25;
+	return curr - 0.025;
 }
 
 // mapping function for opacity
