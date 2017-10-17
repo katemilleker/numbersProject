@@ -1,15 +1,16 @@
-var w = 25;		// width of square in grid, in pixels
-var h = 25;		// height of square in grid, in pixels
+var w = 16;		// width of square in grid, in pixels
+var h = 16;		// height of square in grid, in pixels
 var canvasPosX = 20;	// x pos of canvas top left corner
 var canvasPosY = 20;	// y pos of canvas top left corner
 var backCanvas, myCanvas, board;
-var font;
+var myFont;
+var fontSize = 12;
 var columns, rows;
 var curr_cols, curr_rows;
 var prevCol = 0;
 var prevRow = 0;
 var insideCanvas = false;		// bool mouse over/out for canvas
-var isTouching = true;	
+var isTouching = true;
 var min_opac_num = 0;
 var max_opac_num = 500;
 var decCoords = [];		// array of activated elements to decrememnt
@@ -29,9 +30,15 @@ document.addEventListener("oncopy", function(e) { e.preventDefault(); }, false);
 document.addEventListener("onpaste", function(e) { e.preventDefault(); }, false);
 document.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
 
+
 function preload() {
 	// Load Share Tech Mono font
-	font = loadFont('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+	myFont = loadFont("font/Share-TechMono.otf");
+}
+
+function fontRead() {
+	fontReady = true;
+	console.log("font ready");
 }
 
 function setup() {
@@ -43,9 +50,9 @@ function setup() {
 	myCanvas.mouseOut(outCanvas);	
 	background(0);	// black background
 	
-	columns = floor(width/w)-1;
+	columns = floor(width / w) - 1;
 	curr_cols = columns;
-	rows = floor(height/h)-1;
+	rows = floor(height / h) - 1;
 	curr_rows = rows;
 	
 	// set up 2D array
@@ -153,7 +160,7 @@ function increase(mouseX, mouseY) {
 		//var opac_val = 255;		// solid white for testing
 		fill(opac_val);	// mapped opac val for number
 		
-	  textFont(font, 8);
+		textFont(myFont, fontSize);
 		text(ceil(curr), centerX, centerY);
 		textAlign(CENTER,CENTER);
 	}
@@ -202,9 +209,9 @@ function decrease() {
 			//var opac_val = 255;		// solid white for testing
 			fill(opac_val);	// mapped opac val for number
 			
-		  textFont(font, 8);
+			textFont(myFont, fontSize);
 			text(ceil(curr), centerX, centerY);
-			textAlign(CENTER,CENTER);	
+			textAlign(CENTER,CENTER);
 		}
 	}
 }
