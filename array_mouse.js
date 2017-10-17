@@ -3,6 +3,7 @@ var h = 25;		// height of square in grid, in pixels
 var canvasPosX = 20;	// x pos of canvas top left corner
 var canvasPosY = 20;	// y pos of canvas top left corner
 var backCanvas, myCanvas, board;
+var font;
 var columns, rows;
 var curr_cols, curr_rows;
 var prevCol = 0;
@@ -27,6 +28,11 @@ document.addEventListener("oncut", function(e) { e.preventDefault(); }, false);
 document.addEventListener("oncopy", function(e) { e.preventDefault(); }, false);
 document.addEventListener("onpaste", function(e) { e.preventDefault(); }, false);
 document.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
+
+function preload() {
+	// Load Share Tech Mono font
+	font = loadFont('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+}
 
 function setup() {
 	// p5.dom.js library required locally for dom function .position()	
@@ -146,6 +152,8 @@ function increase(mouseX, mouseY) {
 		var opac_val = map(curr, min_opac_num, max_opac_num, 50, 255);
 		//var opac_val = 255;		// solid white for testing
 		fill(opac_val);	// mapped opac val for number
+		
+	  textFont(font, 8);
 		text(ceil(curr), centerX, centerY);
 		textAlign(CENTER,CENTER);
 	}
@@ -188,10 +196,13 @@ function decrease() {
 		// draw black base over previous text
 		fill(0);	// black canvas 
 		rect(decCol*w, decRow*h, w-1, h-1);
-		if (curr > 0) {
+		if (curr >= 0) {
+			//rect(decCol*w, decRow*h, w-1, h-1);
 			var opac_val = map(curr, min_opac_num, max_opac_num, 50, 255);
 			//var opac_val = 255;		// solid white for testing
 			fill(opac_val);	// mapped opac val for number
+			
+		  textFont(font, 8);
 			text(ceil(curr), centerX, centerY);
 			textAlign(CENTER,CENTER);	
 		}
