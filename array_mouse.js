@@ -146,13 +146,18 @@ function increase(mouseX, mouseY) {
 
 		var currNum = ceil(curr);
 		var currWidth = textWidth(currNum.toString());
-		var digits = floor(Math.log10(currNum)) + 1;
-		var offset = currWidth / digits;
+		var	offset = (currWidth / 2) - (w / 2);
+		var startX, rectWidth;
+		if (currWidth > w) {
+			startX = mouseCol*w - offset;
+			rectWidth = currWidth;
+		} else {
+			startX = mouseCol*w;
+			rectWidth = w-1;
+		}
 		
-		// redraw over previous number
-		fill(0,255,0);	// green canvas for testing
-		fill(0);	// black canvas 
-		rect(mouseCol*w - offset, mouseRow*h, currWidth + offset, h-1);
+		fill(0); 	// black canvas
+		rect(startX, mouseRow*h, rectWidth, h-1);
 		
 		// update number value and opacity
 		var opac_val = map(curr, min_opac_num, max_opac_num, 50, 255);
