@@ -1,5 +1,5 @@
-var w = 16;		// width of square in grid, in pixels
-var h = 16;		// height of square in grid, in pixels
+var w = 18;		// width of square in grid, in pixels
+var h = 18;		// height of square in grid, in pixels
 var canvasPosX = 20;	// x pos of canvas top left corner
 var canvasPosY = 20;	// y pos of canvas top left corner
 var backCanvas, myCanvas, board;
@@ -25,20 +25,15 @@ function mouseClicked() { isTouching = true; }
 
 // disable touch page scrolling, cut copy paste, and right mouse click for mobile
 //document.addEventListener("scrollstart", function(e) { e.preventDefault(); }, false);
-document.addEventListener("oncut", function(e) { e.preventDefault(); }, false);
-document.addEventListener("oncopy", function(e) { e.preventDefault(); }, false);
-document.addEventListener("onpaste", function(e) { e.preventDefault(); }, false);
-document.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
+document.addEventListener("oncut", function (e) { e.preventDefault(); }, false);
+document.addEventListener("oncopy", function (e) { e.preventDefault(); }, false);
+document.addEventListener("onpaste", function (e) { e.preventDefault(); }, false);
+document.addEventListener("contextmenu", function (e) { e.preventDefault(); }, false);
 
 
 function preload() {
 	// Load Share Tech Mono font
 	myFont = loadFont("font/Share-TechMono.otf");
-}
-
-function fontRead() {
-	fontReady = true;
-	console.log("font ready");
 }
 
 function setup() {
@@ -47,7 +42,7 @@ function setup() {
 	//myCanvas = createCanvas(windowWidth-w, windowHeight-h-canvasPosY);
 	//myCanvas.position(canvasPosX, canvasPosY);
 	myCanvas.mouseOver(inCanvas);
-	myCanvas.mouseOut(outCanvas);	
+	myCanvas.mouseOut(outCanvas);
 	background(0);	// black background
 	
 	columns = floor(width / w) - 1;
@@ -61,12 +56,12 @@ function setup() {
 		board[i] = new Array(rows);
 	} 
 
-	// draw grid, initialize array values
+	// initialize array values, draw grid (for testing)
   for (var i = 0; i < columns; i++) {
     for (var j = 0; j < rows; j++) {
-      fill(0);	// black canvas 
-			//stroke(50); // grey grid lines for testing
-			rect(i*w, j*h, w-1, h-1);
+      //fill(0);	// black canvas 
+			//stroke(50);		// grey grid lines
+			//rect(i*w, j*h, w-1, h-1);
 			board[i][j] = 1;
     }
   }
@@ -85,24 +80,22 @@ function windowResized() {
 		new_board[i] = new Array(curr_rows);
 	} 
 	
-	// draw grid 
+	/*// draw grid for testing
   for (var i = 0; i < curr_cols; i++) {
     for (var j = 0; j < curr_rows; j++) {
 	    fill(0);	// black canvas 
-			//stroke(50); // grey grid lines for testing
+			stroke(50);		// grid lines around boxes
 			rect(i*w, j*h, w-1, h-1);
 		}
-	}			
+	}	*/
 			
 	// draw numbers
   for (var i = 0; i < curr_cols; i++) {
     for (var j = 0; j < curr_rows; j++) {
 			if (i < columns && j < rows) {
-				// copy over exiting values
-				new_board[i][j] = board[i][j];
+				new_board[i][j] = board[i][j];	// copy over exiting values
 			} else {
-				// initialize new values
-				new_board[i][j] = 1;
+				new_board[i][j] = 1;		// initialize new values
 			}
 			
 			// display all grid text for testing 
