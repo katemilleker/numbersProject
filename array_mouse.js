@@ -151,17 +151,23 @@ function increase(mouseX, mouseY) {
 		var curr = board[mouseCol][mouseRow];
 		board[mouseCol][mouseRow] = increaseCurr(curr);
 
-		//then redraw over previous number
+		var currNum = ceil(curr);
+		var currWidth = textWidth(currNum.toString());
+		var digits = floor(Math.log10(currNum)) + 1;
+		var offset = currWidth / digits;
+		
+		// redraw over previous number
+		fill(0,255,0);	// green canvas for testing
 		fill(0);	// black canvas 
-		rect(mouseCol*w, mouseRow*h, w-1, h-1);
-
+		rect(mouseCol*w - offset, mouseRow*h, currWidth + offset, h-1);
+		
 		// update number value and opacity
 		var opac_val = map(curr, min_opac_num, max_opac_num, 50, 255);
 		//var opac_val = 255;		// solid white for testing
 		fill(opac_val);	// mapped opac val for number
 		
 		textFont(myFont, fontSize);
-		text(ceil(curr), centerX, centerY);
+		text(currNum, centerX, centerY);
 		textAlign(CENTER,CENTER);
 	}
 	
@@ -190,27 +196,36 @@ function decrease() {
 		var centerX = decCol*w + .5*w;
 		var centerY = decRow*h + .5*h;
 		
-		// update number value
 		var curr = board[decCol][decRow];
 		if (curr <= 0) {
-			// remove element from dec array if 0
-			decCoords.splice(i,1);
+			decCoords.splice(i,1);	// remove element
 		} else {
-			// otherwise decrement and redraw text
 			board[decCol][decRow] = decreaseCurr(curr);
 		}
-		// if number visible in grid space, update the canvas with new value and opacity
-		// draw black base over previous text
-		fill(0);	// black canvas 
-		rect(decCol*w, decRow*h, w-1, h-1);
+		
+		var currNum = ceil(curr);
+		var currWidth = textWidth(currNum.toString());
+		var	offset = (currWidth / 2) - (w / 2);
+		var startX, rectWidth;
+		if (currWidth > w) {
+			startX = decCol*w - offset;
+			rectWidth = currWidth;
+		} else {
+			startX = decCol*w;
+			rectWidth = w-1;
+		}
+		
+		fill(0); 	// black canvas
+		rect(startX, decRow*h, rectWidth, h-1);
+		
+		// update text
 		if (curr >= 0) {
-			//rect(decCol*w, decRow*h, w-1, h-1);
 			var opac_val = map(curr, min_opac_num, max_opac_num, 50, 255);
 			//var opac_val = 255;		// solid white for testing
 			fill(opac_val);	// mapped opac val for number
-			
+			//stroke(0);
 			textFont(myFont, fontSize);
-			text(ceil(curr), centerX, centerY);
+			text(currNum, centerX, centerY);
 			textAlign(CENTER,CENTER);
 		}
 	}
