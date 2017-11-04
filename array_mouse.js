@@ -6,7 +6,7 @@ var backCanvas, myCanvas, board;
 var myFont;
 var fontSize = 12;
 var columns, rows;
-var curr_cols, curr_rows;
+//var curr_cols, curr_rows;
 var prevCol = 0;
 var prevRow = 0;
 var insideCanvas = false;		// bool mouse over/out for canvas
@@ -50,19 +50,28 @@ function setup() {
 	rows = floor(height / h) - 1;
 	curr_rows = rows;
 	
+	console.log("columns = " + columns);
+	console.log("rows = " + rows);
+	
 	// set up 2D array
 	board = new Array(columns);
 	for (var i = 0; i < columns; i++) {
 		board[i] = new Array(rows);
 	} 
 
-	// initialize array values, draw grid (for testing)
   for (var i = 0; i < columns; i++) {
     for (var j = 0; j < rows; j++) {
-      //fill(0);	// black canvas 
-			//stroke(50);		// grey grid lines
-			//rect(i*w, j*h, w-1, h-1);
+			// draw grid lines for testing
+      /*fill(0);	// black canvas 
+			stroke(50);		// grey grid lines
+			rect(i*w, j*h, w-1, h-1);*/
+
+			// initialize array values
 			board[i][j] = 1;
+			
+			//display all grid text for testing 
+			//text(board[i][j], i*w+.5*w, j*w+.5*w);
+			//textAlign(CENTER, CENTER);
     }
   }
 }
@@ -72,49 +81,47 @@ function windowResized() {
 	background(0);	// black background
 	
 	// set up new bounds and 2D array
-	curr_cols = floor(width/w)-1;
-	curr_rows = floor(height/h)-1;
-		
+	var curr_cols = floor(width/w)-1;
+	var curr_rows = floor(height/h)-1;
+	
 	new_board = new Array(curr_cols);
 	for (var i = 0; i < curr_cols; i++) {
 		new_board[i] = new Array(curr_rows);
 	} 
 	
-	/*// draw grid for testing
-  for (var i = 0; i < curr_cols; i++) {
+	// draw grid for testing
+  /*for (var i = 0; i < curr_cols; i++) {
     for (var j = 0; j < curr_rows; j++) {
 	    fill(0);	// black canvas 
 			stroke(50);		// grid lines around boxes
 			rect(i*w, j*h, w-1, h-1);
 		}
-	}	*/
-			
+	}*/
+		
 	// draw numbers
   for (var i = 0; i < curr_cols; i++) {
     for (var j = 0; j < curr_rows; j++) {
 			if (i < columns && j < rows) {
-				new_board[i][j] = board[i][j];	// copy over exiting values
+				new_board[i][j] = ceil(board[i][j]);	// copy over exiting values
 			} else {
 				new_board[i][j] = 1;		// initialize new values
 			}
 			
-			// display all grid text for testing 
-			//text(new_board[i][j], i*w+.5*w, j*w+.5*w);
-			//textAlign(CENTER, CENTER);
+			//display all grid text for testing 
+			/*fill(255);
+			text(new_board[i][j], i*w+.5*w, j*w+.5*w);
+			textAlign(CENTER, CENTER);*/
     }
   }
 	
-	// only update max sizes of col/row/board if expanded
-	if (curr_cols > columns) { 
-		columns = curr_cols;
-		if (curr_rows > rows) {
-			row = curr_rows;
-			board = new_board;	// board only updated if both col++ and rows++
-		}
-	}
-	else if (curr_rows > rows) {
-		rows = curr_rows;
-	}
+	// reassign values if new_board grows in cols or rows
+	if (curr_cols > columns || curr_rows > rows) { 
+		if (curr_cols > columns)
+				columns = curr_cols;
+		if (curr_rows > rows) 
+			rows = curr_rows;
+		board = new_board;	
+	}	
 }
 
 // called after setup() and resizeWindow()
@@ -138,7 +145,7 @@ function increase(mouseX, mouseY) {
 	}
 	
 	// increase and update current grid value
-	if (insideCanvas && isTouching && (mouseRow < curr_rows && mouseCol < curr_cols) 
+	if (insideCanvas && isTouching && (mouseRow < rows && mouseCol < columns) 
 			&& (centerX > 0 && centerY > 0)) {
 		// get value of curr and update
 		var curr = board[mouseCol][mouseRow];
@@ -194,6 +201,7 @@ function decrease() {
 		var centerX = decCol*w + .5*w;
 		var centerY = decRow*h + .5*h;
 		
+		//console.log("dec_curr = " + board[decCol][decRow]);
 		var curr = board[decCol][decRow];
 		if (curr <= 0) {
 			decCoords.splice(i,1);	// remove element
