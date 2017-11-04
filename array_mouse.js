@@ -6,7 +6,7 @@ var backCanvas, myCanvas, board;
 var myFont;
 var fontSize = 12;
 var columns, rows;
-//var curr_cols, curr_rows;
+var curr_cols, curr_rows;
 var prevCol = 0;
 var prevRow = 0;
 var insideCanvas = false;		// bool mouse over/out for canvas
@@ -50,9 +50,6 @@ function setup() {
 	rows = floor(height / h) - 1;
 	curr_rows = rows;
 	
-	console.log("columns = " + columns);
-	console.log("rows = " + rows);
-	
 	// set up 2D array
 	board = new Array(columns);
 	for (var i = 0; i < columns; i++) {
@@ -81,8 +78,8 @@ function windowResized() {
 	background(0);	// black background
 	
 	// set up new bounds and 2D array
-	var curr_cols = floor(width/w)-1;
-	var curr_rows = floor(height/h)-1;
+	curr_cols = floor(width/w)-1;
+	curr_rows = floor(height/h)-1;
 	
 	new_board = new Array(curr_cols);
 	for (var i = 0; i < curr_cols; i++) {
@@ -114,7 +111,7 @@ function windowResized() {
     }
   }
 	
-	// reassign values if new_board grows in cols or rows
+	// reassign max values if new_board grows in cols or rows
 	if (curr_cols > columns || curr_rows > rows) { 
 		if (curr_cols > columns)
 				columns = curr_cols;
@@ -147,10 +144,11 @@ function increase(mouseX, mouseY) {
 	// increase and update current grid value
 	if (insideCanvas && isTouching && (mouseRow < rows && mouseCol < columns) 
 			&& (centerX > 0 && centerY > 0)) {
-		// get value of curr and update
+		// get value of curr and increase
 		var curr = board[mouseCol][mouseRow];
 		board[mouseCol][mouseRow] = increaseCurr(curr);
 
+		// redraw black box exactly over curr number
 		var currNum = ceil(curr);
 		var currWidth = textWidth(currNum.toString());
 		var	offset = (currWidth / 2) - (w / 2);
@@ -162,15 +160,15 @@ function increase(mouseX, mouseY) {
 			startX = mouseCol*w;
 			rectWidth = w-1;
 		}
-		
 		fill(0); 	// black canvas
 		rect(startX, mouseRow*h, rectWidth, h-1);
 		
-		// update number value and opacity
+		// update opacity
 		var opac_val = map(curr, min_opac_num, max_opac_num, 50, 255);
 		//var opac_val = 255;		// solid white for testing
 		fill(opac_val);	// mapped opac val for number
 		
+		// display current text
 		textFont(myFont, fontSize);
 		text(currNum, centerX, centerY);
 		textAlign(CENTER,CENTER);
@@ -201,7 +199,7 @@ function decrease() {
 		var centerX = decCol*w + .5*w;
 		var centerY = decRow*h + .5*h;
 		
-		//console.log("dec_curr = " + board[decCol][decRow]);
+		// decrease or delete current value
 		var curr = board[decCol][decRow];
 		if (curr <= 0) {
 			decCoords.splice(i,1);	// remove element
@@ -209,6 +207,7 @@ function decrease() {
 			board[decCol][decRow] = decreaseCurr(curr);
 		}
 		
+		// redraw black box exactly over curr number
 		var currNum = ceil(curr);
 		var currWidth = textWidth(currNum.toString());
 		var	offset = (currWidth / 2) - (w / 2);
@@ -220,11 +219,10 @@ function decrease() {
 			startX = decCol*w;
 			rectWidth = w-1;
 		}
-		
 		fill(0); 	// black canvas
 		rect(startX, decRow*h, rectWidth, h-1);
 		
-		// update text
+		// update opacity and display text
 		if (curr >= 0) {
 			var opac_val = map(curr, min_opac_num, max_opac_num, 50, 255);
 			//var opac_val = 255;		// solid white for testing
