@@ -1,5 +1,5 @@
 # numbersProject
-Drawing With Numbers project for [Ben Grosser] (www.bengrosser.com) at the University of Illinois at Urbana-Champaign.
+Drawing With Numbers project for Ben Grosser (www.bengrosser.com) at the University of Illinois at Urbana-Champaign.
 
 Visit https://katemilleker.github.io/numbersProject to use the prototype.
 
